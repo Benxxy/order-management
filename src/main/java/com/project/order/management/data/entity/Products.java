@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Data
@@ -16,7 +17,7 @@ public class Products {
     private Long id;
     private String name;
     private String description;
-    private String price;
+    private BigDecimal price;
     @OneToMany(mappedBy = "products")
     private Set<OrderDetails> orderDetails;
 }

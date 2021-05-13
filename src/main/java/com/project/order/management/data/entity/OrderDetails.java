@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -19,4 +20,6 @@ public class OrderDetails {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Products products;
+    private int quantity;
+    private BigDecimal totalPrice;
 }
