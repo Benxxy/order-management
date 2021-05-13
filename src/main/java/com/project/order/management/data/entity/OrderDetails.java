@@ -1,12 +1,14 @@
 package com.project.order.management.data.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table
+@NoArgsConstructor
 public class OrderDetails {
     @Id
     @GeneratedValue

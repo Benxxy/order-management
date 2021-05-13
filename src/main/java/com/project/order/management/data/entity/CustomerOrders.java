@@ -1,6 +1,7 @@
 package com.project.order.management.data.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table
+@NoArgsConstructor
 public class CustomerOrders {
     @Id
     @GeneratedValue
