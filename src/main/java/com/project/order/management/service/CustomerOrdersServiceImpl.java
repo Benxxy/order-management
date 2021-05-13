@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,32 +29,33 @@ public class CustomerOrdersServiceImpl implements CustomerOrdersService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public CustomerOrders createOrder(OrderRequestDTO orderRequestDTO,Customer customer) {
+    public CustomerOrders createOrder(OrderRequestDTO orderRequestDTO, Customer customer) {
         Optional<Products> products = productsRepository.findById(orderRequestDTO.getProductId());
-        if(!products.isPresent()){
-            throw new EntityNotFoundException("Product with id: "+orderRequestDTO.getProductId()+" does not exists!");
+        if (!products.isPresent()) {
+            throw new EntityNotFoundException("Product with id: " + orderRequestDTO.getProductId() + " does not exists!");
         }
         CustomerOrders customerOrder = new CustomerOrders();
         UUID uuid = UUID.randomUUID();
         customerOrder.setOrderNumber(uuid.toString());
         customerOrder.setCustomer(customer);
-        customerOrder = customerOrdersRepository.saveAndFlush(customerOrder);
+        customerOrder.setOrderDate(LocalDate.now());
 
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setProducts(products.get());
-        orderDetails.setCustomerOrders(customerOrder);
         orderDetails.setQuantity(orderRequestDTO.getQuantity());
         orderDetails.setTotalPrice(products.get().getPrice().multiply(BigDecimal.valueOf(orderRequestDTO.getQuantity())));
-        orderDetailsRepository.save(orderDetails);
 
-        return customerOrder;
+        customerOrder.getOrderDetails().add(orderDetails);
+        orderDetails.setCustomerOrders(customerOrder);
+
+        return customerOrdersRepository.save(customerOrder);
     }
 
     @Override
-    public List<CustomerOrders> getMyOrders(Long customerId) {
+    public List<CustomerOrders> getOrdersByCustomerId(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
-        if(!customer.isPresent()){
-            throw new EntityNotFoundException("Customer with id: "+customerId+" does not exists!");
+        if (!customer.isPresent()) {
+            throw new EntityNotFoundException("Customer with id: " + customerId + " does not exists!");
         }
         return customerOrdersRepository.findAllByCustomerId(customerId);
     }

@@ -1,0 +1,42 @@
+server:
+  port: 8081
+
+logging:
+  level:
+    root: info
+
+#spring:
+#  datasource:
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/ordermanagementdb
+#    username: root
+#    password: root
+#    data: classpath:init.sql
+#    initialization-mode: always
+#  jpa:
+#    hibernate.ddl-auto: create-drop
+#    generate-ddl: true
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:ordermanagementdb
+    username: sa
+    password: password
+    data: classpath:init.sql
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+springdoc:
+  api-docs:
+    path: /api-docs
+
+jwtSecret: Secret183$%
+
+order-management:
+  encoder:
+    saltLength: 128
+    key-length: 32
+    parallelism: 4
+    memory: 4096
+    itterations: 2

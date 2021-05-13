@@ -1,0 +1,4 @@
+INSERT INTO `customer` VALUES (1,'test@gmail.com','Ben','Dedi','$argon2id$v=19$m=4096,t=2,p=4$Mce/hz9GKd/5mhaf79sScCgC+os3mmBUn372GI60Tzq8FvLvm0p1rBZ/piy6TL6eYgvio4RU19HrTmhzBjy0efiSw9JarE6gb5SSWyWcj5LvE38z6UlyfuPcqY0vU3gQ+jbxB2RXnbRGjnLcWg49c54xOdO3sSRhA31Nlh2C0KE$LXOJA1EU0xO7r3JpGLO6Bqxs0qT8cKTERFX9Cu9FuxE','username');
+INSERT INTO `products` VALUES (1,'Mobilephones','Iphone 12 PRO MAX',989.99),(2,'Laptop','Lenovo IDEAPAD',1057.89);
+INSERT INTO `customer_orders` VALUES (1,'2021-05-13','7f06a9aa-b99f-4482-884c-ec9ef1c5c9df',1),(2,'2021-05-13','ca0604be-035d-4e14-8655-3da9426f0ab0',1),(3,'2021-05-13','4b8a9312-3331-416f-9f8d-e2adf1ed8a7e',1),(4,'2021-05-13','6ed4fcda-f11a-4c27-a8bd-4e5eaf75217a',1),(5,'2021-05-13','63303297-f70d-4949-abf8-d9ed01b43011',1);
+INSERT INTO `order_details` VALUES (1,1,989.99,1,1),(2,3,2969.97,2,1),(3,2,2115.78,3,2),(4,5,5289.45,4,2),(5,9,8909.91,5,1);

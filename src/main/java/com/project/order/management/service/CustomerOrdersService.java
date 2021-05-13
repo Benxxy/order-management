@@ -7,6 +7,7 @@ import com.project.order.management.data.entity.CustomerOrders;
 import java.util.List;
 
 public interface CustomerOrdersService {
-    public CustomerOrders createOrder(OrderRequestDTO orderRequestDTO, Customer customer);
-    public List<CustomerOrders> getMyOrders(Long customerId);
+    CustomerOrders createOrder(OrderRequestDTO orderRequestDTO, Customer customer);
+
+    List<CustomerOrders> getOrdersByCustomerId(Long customerId);
 }

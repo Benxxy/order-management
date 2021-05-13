@@ -4,40 +4,47 @@ import com.project.order.management.data.OrderDTO;
 import com.project.order.management.data.OrderRequestDTO;
 import com.project.order.management.data.entity.Customer;
 import com.project.order.management.data.entity.CustomerOrders;
+import com.project.order.management.mappers.OrderMapper;
+import com.project.order.management.repository.CustomerRepository;
 import com.project.order.management.service.CustomerOrdersService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class CustomerOrdersController {
 
-    private static ModelMapper MAPPER = new ModelMapper();
     private final CustomerOrdersService customerOrdersService;
+    private final CustomerRepository customerRepository;
 
-    @PostMapping
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid OrderRequestDTO orderRequestDTO){
-        Customer customer = new Customer();
-        return new ResponseEntity<OrderDTO>(MAPPER.map(customerOrdersService.createOrder(orderRequestDTO,customer),OrderDTO.class), HttpStatus.CREATED);
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid OrderRequestDTO orderRequestDTO) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Customer customer = customerRepository.findByUsername(userDetails.getUsername());
+        CustomerOrders customerOrders = customerOrdersService.createOrder(orderRequestDTO, customer);
+        return new ResponseEntity<OrderDTO>(OrderMapper.INSTANCE.customerOrdersToOrderDTO(customerOrders), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    @RequestMapping("/my")
-    public ResponseEntity<List<OrderDTO>> getAllMyOrders(){
-        List<CustomerOrders> customerOrders = customerOrdersService.getMyOrders(1L);
-        List<OrderDTO> orderDTOList = customerOrders
-                .stream()
-                .map(order -> MAPPER.map(order, OrderDTO.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(orderDTOList,HttpStatus.OK);
+    @RequestMapping(value = "/my",method = RequestMethod.GET)
+    public ResponseEntity<List<OrderDTO>> getAllMyOrders() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Customer customer = customerRepository.findByUsername(userDetails.getUsername());
+        List<CustomerOrders> customerOrders = customerOrdersService.getOrdersByCustomerId(customer.getId());
+        return new ResponseEntity<List<OrderDTO>>(OrderMapper.INSTANCE.customerOrdersListToOrderDTOList(customerOrders), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<OrderDTO>> getAllOrdersByCustomerId(@RequestParam Long customerId) {
+        List<CustomerOrders> customerOrders = customerOrdersService.getOrdersByCustomerId(customerId);
+        return new ResponseEntity<List<OrderDTO>>(OrderMapper.INSTANCE.customerOrdersListToOrderDTOList(customerOrders), HttpStatus.OK);
     }
 
 }

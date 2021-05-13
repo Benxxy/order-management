@@ -2,15 +2,13 @@ package com.project.order.management.data;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 public class OrderDTO {
-    private String orderId;
+    private Long orderId;
     private String orderNumber;
-    private Date date;
-    private int quantity;
-    private BigDecimal price;
-    private BigDecimal total;
+    private LocalDate orderDate;
+    private Set<OrderDetailsDTO> orderDetailsDTO;
 }
