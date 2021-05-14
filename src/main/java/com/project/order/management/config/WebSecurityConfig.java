@@ -51,7 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
             "/v3/api-docs",
             "/api-docs/swagger-config",
-            "/api-docs"
+            "/api-docs",
+            "api-docs.yaml"
     };
 
     @Override
@@ -71,6 +72,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**","/api-docs/swagger-config","/api-docs");
+        web.ignoring().antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**","/api-docs/swagger-config","/api-docs","/api-docs.yaml");
     }
 }

@@ -1,0 +1,176 @@
+openapi: 3.0.1
+info:
+  title: order-management API
+  description: Ordering management software
+  version: 0.0.1
+paths:
+  /order:
+    get:
+      summary: Returns a list of orders with details by userId.
+      description: Returns a list of orders with details by userId.
+      tags:
+        - customer-orders-controller
+      operationId: getAllOrdersByCustomerId
+      parameters:
+        - name: customerId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderDTO"
+        "404":
+          description: The customer with given Id does not exists!.
+    post:
+      summary: Create order
+      description: Create order providing productId and quantity.
+      tags:
+        - customer-orders-controller
+      operationId: createOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderRequestDTO"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderDTO"
+  /customer:
+    post:
+      tags:
+        - customer-controller
+      operationId: createCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerDTO"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JwtResponse"
+  /authenticate:
+    post:
+      tags:
+        - authentication-controller
+      operationId: createAuthenticationToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JwtRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+  /order/my:
+    get:
+      tags:
+        - customer-orders-controller
+      operationId: getAllMyOrders
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderDTO"
+components:
+  schemas:
+    OrderRequestDTO:
+      required:
+        - productId
+        - quantity
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int32
+    OrderDTO:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        orderNumber:
+          type: string
+        orderDate:
+          type: string
+          format: date
+        orderDetailsDTO:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderDetailsDTO"
+    OrderDetailsDTO:
+      type: object
+      properties:
+        productName:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        price:
+          type: number
+        totalPrice:
+          type: number
+    CustomerDTO:
+      required:
+        - email
+        - password
+        - username
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          pattern: ^(.+)@(.+)$
+          type: string
+        username:
+          type: string
+        password:
+          pattern: ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$
+          type: string
+    JwtResponse:
+      type: object
+      properties:
+        jwtToken:
+          type: string
+    JwtRequest:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
