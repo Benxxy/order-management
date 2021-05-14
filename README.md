@@ -139,7 +139,7 @@ At starting the application `init.sql` will be executed populating the database 
 
 The repository contains a test cases to cover initialization of DB data in purpose of testing the application.
 
-    mvn test
+    mvn clean test
 
 # Explore Api Documentation
 
