@@ -29,7 +29,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\":\"Ben\",\r\n    \"lastName\":\"Dedi\",\r\n    \"email\":\"test2@gmail.com\",\r\n    \"username\":\"username\",\r\n    \"password\":\"Password29$$\"\r\n}",
+							"raw": "{\r\n    \"firstName\":\"Ben\",\r\n    \"lastName\":\"Dedi\",\r\n    \"email\":\"test@gmail.com\",\r\n    \"username\":\"username\",\r\n    \"password\":\"Password29\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
