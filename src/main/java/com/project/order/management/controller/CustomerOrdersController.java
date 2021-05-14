@@ -26,7 +26,7 @@ public class CustomerOrdersController {
     private final CustomerRepository customerRepository;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<OrderDTO> createOrder(@RequestBody @Valid OrderRequestDTO orderRequestDTO) {
+    public ResponseEntity<OrderDTO> createOrder(@Valid @RequestBody OrderRequestDTO orderRequestDTO) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Customer customer = customerRepository.findByUsername(userDetails.getUsername());
         CustomerOrders customerOrders = customerOrdersService.createOrder(orderRequestDTO, customer);

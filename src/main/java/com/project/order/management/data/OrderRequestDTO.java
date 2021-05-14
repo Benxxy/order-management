@@ -3,13 +3,14 @@ package com.project.order.management.data;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class OrderRequestDTO {
 
-    @NotEmpty(message = "Please provide productId")
+    @NotNull(message = "Please provide productId")
     private Long productId;
 
-    @NotEmpty(message = "Please provide quantity of ordered product")
+    @NotNull(message = "Please provide quantity of ordered product")
     private int quantity;
 }
