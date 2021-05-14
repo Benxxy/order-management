@@ -30,10 +30,10 @@ Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/
 mvn spring-boot:run
 ```
 
-To test that it works, open a browser tab at http://127.0.0.1:8081/swagger-ui.html  
+To test that it works, open a browser tab at http://127.0.0.1:8081/products  
 Alternatively, you can run
 
-    curl http://127:0.0.1:8081/api-docs
+    curl http://127:0.0.1:8081/products
 
 At starting the application `init.sql` will be executed populating the database with sample data to test the application.
 
