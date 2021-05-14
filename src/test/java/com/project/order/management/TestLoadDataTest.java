@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TestLoadDataForTestCases {
+public class TestLoadDataTest {
 
     @Autowired
     private CustomerOrdersRepository customerOrdersRepository;

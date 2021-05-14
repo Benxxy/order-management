@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ActiveProfiles(value = "test")
 @AutoConfigureMockMvc(addFilters = false)
 @WithMockUser
-public class CustomerOrdersTests {
+public class CustomerOrdersTest {
 
     @Autowired
     private MockMvc mockMvc;
